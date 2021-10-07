@@ -1,0 +1,12 @@
+[programs.localnet]
+contract = "DRCz1kNKm9uMvTNhFS5eLHq9fjF1LmqPLLWncASFtY3M"
+
+[registry]
+url = "https://anchor.projectserum.com"
+
+[provider]
+cluster = "localnet"
+wallet = "/home/kox/.config/solana/id.json"
+
+[scripts]
+test = "mocha -t 1000000 tests/"
