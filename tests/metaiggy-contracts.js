@@ -13,6 +13,8 @@ describe('contract', () => {
   let startCompetitionTs = null;
   let endInscriptionTs = null;
   let endCompetitionTs = null;
+  
+  const maxParticipants = 10;
 
   it("fails to create an account if the dates are not sequential", async () => {
     // #region code-simplified
@@ -33,7 +35,8 @@ describe('contract', () => {
         new anchor.BN(1234), 
         startCompetitionTs,
         endInscriptionTs,
-        endCompetitionTs, {
+        endCompetitionTs,
+        maxParticipants, {
           accounts: {
             myAccount: _myAccount.publicKey,
             user: provider.wallet.publicKey,
@@ -69,7 +72,8 @@ describe('contract', () => {
         new anchor.BN(1234), 
         startCompetitionTs,
         endInscriptionTs,
-        endCompetitionTs, {
+        endCompetitionTs,
+        maxParticipants, {
           accounts: {
             myAccount: _myAccount.publicKey,
             user: provider.wallet.publicKey,
@@ -107,7 +111,8 @@ describe('contract', () => {
       new anchor.BN(1234), 
       startCompetitionTs,
       endInscriptionTs,
-      endCompetitionTs, {
+      endCompetitionTs,
+      maxParticipants, {
         accounts: {
           myAccount: _myAccount.publicKey,
           user: provider.wallet.publicKey,
@@ -127,7 +132,7 @@ describe('contract', () => {
     // Check it's state was initialized.
     assert.ok(account.data.eq(new anchor.BN(1234)));
 
-    assert.ok(account.data.eq(new anchor.BN(1234)));
+    assert.equal(account.maxParticipants, 10);
 
     // Store the account for the next test.
     _myAccount = _myAccount;
