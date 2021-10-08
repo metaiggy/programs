@@ -12,11 +12,11 @@ declare_id!("DRCz1kNKm9uMvTNhFS5eLHq9fjF1LmqPLLWncASFtY3M");
 // max_participants: Max number of participants allowed 
 
 #[program]
-mod contract {
+mod competition {
     use super::*;
 
-    pub fn initialize(
-        ctx: Context<Initialize>, 
+    pub fn initialize_competition(
+        ctx: Context<InitializeCompetition>, 
 
         start_competition_ts: i64,
         end_inscription_ts: i64,
@@ -30,30 +30,30 @@ mod contract {
             return Err(ErrorCode::SeqTimes.into());
         }          
 
-        let my_account = &mut ctx.accounts.my_account;
+        let competition_account = &mut ctx.accounts.competition_account;
 
-        my_account.start_competition_ts = start_competition_ts;
-        my_account.end_inscription_ts = end_inscription_ts;
-        my_account.end_competition_ts = end_competition_ts;
+        competition_account.start_competition_ts = start_competition_ts;
+        competition_account.end_inscription_ts = end_inscription_ts;
+        competition_account.end_competition_ts = end_competition_ts;
 
-        my_account.max_participants = max_participants;
-        my_account.current_participants = 0;
+        competition_account.max_participants = max_participants;
+        competition_account.current_participants = 0;
 
         Ok(())
     }
 }
 
 #[derive(Accounts)]
-pub struct Initialize<'info> {
+pub struct InitializeCompetition<'info> {
     #[account(init, payer = user, space = 8 + 8 + 8 + 8 + 4)]
-    pub my_account: Account<'info, MyAccount>,
+    pub competition_account: Account<'info, MyCompetition>,
     #[account(mut)]
     pub user: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
 
 #[account]
-pub struct MyAccount {
+pub struct MyCompetition {
 
     pub start_competition_ts: i64,
     pub end_inscription_ts: i64,
