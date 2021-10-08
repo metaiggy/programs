@@ -32,7 +32,6 @@ describe('contract', () => {
 
     try {
       await program.rpc.initialize(
-        new anchor.BN(1234), 
         startCompetitionTs,
         endInscriptionTs,
         endCompetitionTs,
@@ -69,7 +68,6 @@ describe('contract', () => {
 
     try {
       await program.rpc.initialize(
-        new anchor.BN(1234), 
         startCompetitionTs,
         endInscriptionTs,
         endCompetitionTs,
@@ -108,7 +106,6 @@ describe('contract', () => {
     // Create the new account and initialize it with the program.
     // #region code-simplified
     await program.rpc.initialize(
-      new anchor.BN(1234), 
       startCompetitionTs,
       endInscriptionTs,
       endCompetitionTs,
@@ -130,35 +127,11 @@ describe('contract', () => {
     console.log(account.startCompetitionTs.toNumber() * 1000);
     console.log(Date.now())
     // Check it's state was initialized.
-    assert.ok(account.data.eq(new anchor.BN(1234)));
 
     assert.equal(account.maxParticipants, 10);
 
     // Store the account for the next test.
     _myAccount = _myAccount;
   });
-/* 
-  it("Updates a previously created account", async () => {
-    const myAccount = _myAccount;
 
-    // #region update-test
-
-    // The program to execute.
-    const program = anchor.workspace.Contract;
-
-    // Invoke the update rpc.
-    await program.rpc.update(new anchor.BN(4321), {
-      accounts: {
-        myAccount: myAccount.publicKey,
-      },
-    });
-
-    // Fetch the newly updated account.
-    const account = await program.account.myAccount.fetch(myAccount.publicKey);
-
-    // Check it's state was mutated.
-    assert.ok(account.data.eq(new anchor.BN(4321)));
-
-    // #endregion update-test
-  }); */
 });

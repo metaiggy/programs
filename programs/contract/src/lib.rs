@@ -8,6 +8,8 @@ declare_id!("DRCz1kNKm9uMvTNhFS5eLHq9fjF1LmqPLLWncASFtY3M");
 // start_competition_ts: starting time to register
 // end_inscription_ts: Ending time for registering in competition
 // end_competition_ts: End day for the competition
+// current_participants: Number of participants already subscribed
+// max_participants: Max number of participants allowed 
 
 #[program]
 mod contract {
@@ -15,7 +17,7 @@ mod contract {
 
     pub fn initialize(
         ctx: Context<Initialize>, 
-        data: u64, 
+
         start_competition_ts: i64,
         end_inscription_ts: i64,
         end_competition_ts: i64,
@@ -29,7 +31,6 @@ mod contract {
         }          
 
         let my_account = &mut ctx.accounts.my_account;
-        my_account.data = data;
 
         my_account.start_competition_ts = start_competition_ts;
         my_account.end_inscription_ts = end_inscription_ts;
@@ -44,7 +45,7 @@ mod contract {
 
 #[derive(Accounts)]
 pub struct Initialize<'info> {
-    #[account(init, payer = user, space = 8 + 8 + 8 + 8 + 8 + 4)]
+    #[account(init, payer = user, space = 8 + 8 + 8 + 8 + 4)]
     pub my_account: Account<'info, MyAccount>,
     #[account(mut)]
     pub user: Signer<'info>,
@@ -53,7 +54,6 @@ pub struct Initialize<'info> {
 
 #[account]
 pub struct MyAccount {
-    pub data: u64,
 
     pub start_competition_ts: i64,
     pub end_inscription_ts: i64,
